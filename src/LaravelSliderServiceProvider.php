@@ -37,7 +37,7 @@ class LaravelSliderServiceProvider extends PackageServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/config/config.php' => config_path('slider.php'),
+                __DIR__ . '/config/config.php' => config_path('slider.php'),
             ], 'config');
 
             $this->commands([
@@ -51,7 +51,7 @@ class LaravelSliderServiceProvider extends PackageServiceProvider
     protected function registerRoutes()
     {
         Route::group($this->routeConfiguration(), function () {
-            $this->loadRoutesFrom(__DIR__.'/routes/api.php');
+            $this->loadRoutesFrom(__DIR__ . '/routes/api.php');
         });
     }
 
