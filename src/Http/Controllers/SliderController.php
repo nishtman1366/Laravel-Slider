@@ -24,7 +24,7 @@ class SliderController extends Controller
                 'SLIDER_ACTIVE' => 'فعال',
                 'SLIDER_INACTIVE' => 'غیرفعال',
                 'SLIDER_DELETED' => 'حذف شده',
-            ]
+            ],
         ]);
     }
 
@@ -38,7 +38,7 @@ class SliderController extends Controller
                     'SLIDER_ACTIVE' => 'فعال',
                     'SLIDER_INACTIVE' => 'غیرفعال',
                     'SLIDER_DELETED' => 'حذف شده',
-                ]
+                ],
             ]);
     }
 
@@ -48,7 +48,7 @@ class SliderController extends Controller
             'category_id' => 'required|exists:sliders_categories,id',
             'title' => 'required',
             'image' => 'required|file|mimetypes:image/jpeg,image/png,image/gif,image/svg+xml',
-            'status'=>'required|in:SLIDER_CREATED,SLIDER_ACTIVE,SLIDER_INACTIVE,SLIDER_DELETED'
+            'status' => 'required|in:SLIDER_CREATED,SLIDER_ACTIVE,SLIDER_INACTIVE,SLIDER_DELETED',
         ]);
 
         $slider = Slider::create($request->except(['image']));
@@ -67,7 +67,9 @@ class SliderController extends Controller
     {
         $id = (int)$request->route('sliderId');
         $slider = Slider::find($id);
-        if (is_null($slider)) throw new NotFoundHttpException('اسلایدر تصویر یافت نشد.');
+        if (is_null($slider)) {
+            throw new NotFoundHttpException('اسلایدر تصویر یافت نشد.');
+        }
 
         return response()->json([
             'slider' => $slider,
@@ -77,7 +79,7 @@ class SliderController extends Controller
                 'SLIDER_ACTIVE' => 'فعال',
                 'SLIDER_INACTIVE' => 'غیرفعال',
                 'SLIDER_DELETED' => 'حذف شده',
-            ]
+            ],
         ]);
     }
 
@@ -85,19 +87,20 @@ class SliderController extends Controller
     {
         $id = (int)$request->route('sliderId');
         $slider = Slider::find($id);
-        if (is_null($slider)) throw new NotFoundHttpException('اسلایدر تصویر یافت نشد.');
+        if (is_null($slider)) {
+            throw new NotFoundHttpException('اسلایدر تصویر یافت نشد.');
+        }
 
         $request->validate([
             'category_id' => 'required|exists:sliders_categories,id',
             'title' => 'required',
             'image' => 'nullable|file|mimetypes:image/jpeg,image/png,image/gif,image/svg+xml',
-            'status'=>'required|in:SLIDER_CREATED,SLIDER_ACTIVE,SLIDER_INACTIVE,SLIDER_DELETED'
+            'status' => 'required|in:SLIDER_CREATED,SLIDER_ACTIVE,SLIDER_INACTIVE,SLIDER_DELETED',
 
         ]);
 
         $slider->fill($request->except(['image']));
         if ($request->hasFile('image')) {
-
             Storage::disk('public')
                 ->delete(sprintf(
                     'sliders/%s/%s/%s',
@@ -113,6 +116,7 @@ class SliderController extends Controller
             $slider->image = $fileName;
         }
         $slider->save();
+
         return response()->json($slider);
     }
 
@@ -120,7 +124,9 @@ class SliderController extends Controller
     {
         $id = (int)$request->route('sliderId');
         $slider = Slider::find($id);
-        if (is_null($slider)) throw new NotFoundHttpException('اسلایدر تصویر یافت نشد.');
+        if (is_null($slider)) {
+            throw new NotFoundHttpException('اسلایدر تصویر یافت نشد.');
+        }
         Storage::disk('public')
             ->delete(sprintf(
                 'sliders/%s/%s/%s',
@@ -129,6 +135,7 @@ class SliderController extends Controller
                 $slider->image
             ));
         $slider->delete();
+
         return response()->json();
     }
 }

@@ -3,10 +3,7 @@
 namespace Nishtman\LaravelSlider\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Nishtman\LaravelSlider\Models\Category;
-use Nishtman\LaravelSlider\Models\Slider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CategoryController extends Controller
@@ -17,7 +14,7 @@ class CategoryController extends Controller
             ->paginate();
 
         return response()->json([
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -30,7 +27,7 @@ class CategoryController extends Controller
                     'SLIDER_CATEGORY_ACTIVE' => 'فعال',
                     'SLIDER_CATEGORY_INACTIVE' => 'غیرفعال',
                     'SLIDER_CATEGORY_DELETED' => 'حذف شده',
-                ]
+                ],
             ]);
     }
 
@@ -51,7 +48,9 @@ class CategoryController extends Controller
     {
         $id = (int)$request->route('categoryId');
         $category = Category::find($id);
-        if (is_null($category)) throw new NotFoundHttpException('دسته بندی اسلایدر تصویر یافت نشد.');
+        if (is_null($category)) {
+            throw new NotFoundHttpException('دسته بندی اسلایدر تصویر یافت نشد.');
+        }
 
         return response()->json([
             'category' => $category,
@@ -60,7 +59,7 @@ class CategoryController extends Controller
                 'SLIDER_CATEGORY_ACTIVE' => 'فعال',
                 'SLIDER_CATEGORY_INACTIVE' => 'غیرفعال',
                 'SLIDER_CATEGORY_DELETED' => 'حذف شده',
-            ]
+            ],
         ]);
     }
 
@@ -68,7 +67,9 @@ class CategoryController extends Controller
     {
         $id = (int)$request->route('categoryId');
         $category = Category::find($id);
-        if (is_null($category)) throw new NotFoundHttpException('دسته بندی اسلایدر تصویر یافت نشد.');
+        if (is_null($category)) {
+            throw new NotFoundHttpException('دسته بندی اسلایدر تصویر یافت نشد.');
+        }
 
         $request->validate([
             'name' => 'required',
@@ -78,6 +79,7 @@ class CategoryController extends Controller
 
         $category->fill($request->all());
         $category->save();
+
         return response()->json($category);
     }
 
@@ -85,8 +87,11 @@ class CategoryController extends Controller
     {
         $id = (int)$request->route('categoryId');
         $category = Category::find($id);
-        if (is_null($category)) throw new NotFoundHttpException('دسته بندی اسلایدر تصویر یافت نشد.');
+        if (is_null($category)) {
+            throw new NotFoundHttpException('دسته بندی اسلایدر تصویر یافت نشد.');
+        }
         $category->delete();
+
         return response()->json();
     }
 }
