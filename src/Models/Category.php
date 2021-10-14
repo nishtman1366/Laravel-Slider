@@ -1,8 +1,9 @@
 <?php
+
 namespace Nishtman\LaravelSlider\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Morilog\Jalali\Jalalian;
 
 class Category extends Model
@@ -19,9 +20,10 @@ class Category extends Model
 
     public function getStatusTextAttribute()
     {
-        if (is_null($this->attributes['status'])) return 'نامشخص';
-        switch($this->attributes['status'])
-        {
+        if (is_null($this->attributes['status'])) {
+            return 'نامشخص';
+        }
+        switch ($this->attributes['status']) {
             default:
             case 'SLIDER_CATEGORY_CREATED':
                 return 'ایجاد شده';
@@ -36,16 +38,21 @@ class Category extends Model
 
     public function getCreateDateAttribute()
     {
-        if (is_null($this->attributes['created_at'])) return null;
+        if (is_null($this->attributes['created_at'])) {
+            return null;
+        }
+
         return Jalalian::forge($this->attributes['created_at'])->format('Y/m/d H:i:s');
     }
 
     public function getUpdateDateAttribute()
     {
-        if (is_null($this->attributes['updated_at'])) return null;
+        if (is_null($this->attributes['updated_at'])) {
+            return null;
+        }
+
         return Jalalian::forge($this->attributes['updated_at'])->format('Y/m/d H:i:s');
     }
-
 
     public function sliders()
     {
