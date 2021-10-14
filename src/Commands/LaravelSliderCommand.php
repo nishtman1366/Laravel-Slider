@@ -49,7 +49,7 @@ class LaravelSliderCommand extends Command
     {
         $params = [
             '--provider' => "Nishtman\Laravel-Slider\LaravelSliderServiceProvider",
-            '--tag' => "config"
+            '--tag' => "config",
         ];
 
         if ($forcePublish === true) {

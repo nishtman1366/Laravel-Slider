@@ -3,9 +3,9 @@
 namespace Nishtman\LaravelSlider;
 
 use Illuminate\Support\Facades\Route;
+use Nishtman\LaravelSlider\Commands\LaravelSliderCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Nishtman\LaravelSlider\Commands\LaravelSliderCommand;
 
 class LaravelSliderServiceProvider extends PackageServiceProvider
 {
@@ -26,7 +26,7 @@ class LaravelSliderServiceProvider extends PackageServiceProvider
 
     public function register()
     {
-        $this->app->bind('LaravelSlider', function($app) {
+        $this->app->bind('LaravelSlider', function ($app) {
             return new LaravelSlider();
         });
     }
