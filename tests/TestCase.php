@@ -3,8 +3,8 @@
 namespace Nishtman\LaravelSlider\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Nishtman\LaravelSlider\LaravelSliderServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
