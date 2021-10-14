@@ -57,10 +57,11 @@ class LaravelSliderCommand extends Command
         }
 
         $this->call('vendor:publish', $params);
+        $this->call('config:cache');
     }
 
     private function runMigrations()
     {
-//        $this->call('migrate');
+        $this->call('migrate');
     }
 }

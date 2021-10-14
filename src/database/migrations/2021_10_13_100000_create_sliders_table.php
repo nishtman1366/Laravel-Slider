@@ -13,8 +13,22 @@ class CreateSlidersTable extends Migration
      */
     public function up()
     {
+        Schema::create('sliders_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->string('status')->default('SLIDER_CATEGORY_CREATED');
+            $table->timestamps();
+        });
+
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\Nishtman\LaravelSlider\Models\Category::class)->constrained('sliders_categories')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->string('title');
+            $table->string('subtitle');
+            $table->string('image')->nullable();
+            $table->string('url')->nullable();
+            $table->string('status')->default('SLIDER_CREATED');
             $table->timestamps();
         });
     }

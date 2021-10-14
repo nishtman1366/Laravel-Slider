@@ -1,28 +1,21 @@
 <?php
-
 namespace Nishtman\LaravelSlider\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Morilog\Jalali\Jalalian;
 
-class Slider extends Model
+class Category extends Model
 {
     use HasFactory;
 
     public function getTable()
     {
-        return config('slider.database.sliders_table', parent::getTable());
+        return config('slider.database.categories_table', parent::getTable());
     }
 
-    protected $fillable = ['category_id', 'title', 'subtitle', 'image', 'url', 'status'];
-    protected $appends = ['statusText', 'createDate', 'updateDate', 'imageUrl'];
-
-    public function getImageUrlAttribute()
-    {
-        if (is_null($this->attributes['image'])) return null;
-        return url('storage') . sprintf('/sliders/%s/%s/%s', $this->category_id, $this->id, $this->image);
-    }
+    protected $fillable = ['name', 'description', 'status'];
+    protected $appends = ['statusText', 'createDate', 'updateDate'];
 
     public function getStatusTextAttribute()
     {
@@ -30,13 +23,13 @@ class Slider extends Model
         switch($this->attributes['status'])
         {
             default:
-            case 'SLIDER_CREATED':
+            case 'SLIDER_CATEGORY_CREATED':
                 return 'ایجاد شده';
-            case 'SLIDER_ACTIVE':
+            case 'SLIDER_CATEGORY_ACTIVE':
                 return 'فعال';
-            case 'SLIDER_INACTIVE':
+            case 'SLIDER_CATEGORY_INACTIVE':
                 return 'غیرفعال';
-            case 'SLIDER_DELETED':
+            case 'SLIDER_CATEGORY_DELETED':
                 return 'حذف شده';
         }
     }
@@ -54,8 +47,8 @@ class Slider extends Model
     }
 
 
-    public function category()
+    public function sliders()
     {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
+        return $this->hasMany(Slider::class, 'category_id', 'id');
     }
 }
