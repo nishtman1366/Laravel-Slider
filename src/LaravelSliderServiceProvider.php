@@ -3,27 +3,11 @@
 namespace Nishtman\LaravelSlider;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
 use Nishtman\LaravelSlider\Commands\LaravelSliderCommand;
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class LaravelSliderServiceProvider extends PackageServiceProvider
+class LaravelSliderServiceProvider extends ServiceProvider
 {
-    public function configurePackage(Package $package): void
-    {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
-        $package
-            ->name('laravel-slider')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-slider_table')
-            ->hasCommand(LaravelSliderCommand::class);
-    }
-
     public function register()
     {
         $this->app->bind('LaravelSlider', function ($app) {
