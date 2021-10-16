@@ -1,10 +1,13 @@
 <?php
 
 return [
-    'posts_table' => 'posts',
+    'database' => [
+        'sliders_table' => 'sliders',
+        'categories_table' => 'sliders_categories',
+    ],
 
     'routes' => [
         'prefix' => 'api/sliders',
-        'middleware' => '',
+        'middleware' => ['api'],
     ],
 ];
