@@ -13,6 +13,7 @@ class LaravelSlider
     public function setCategoryId(int $id)
     {
         $this->items = Slider::where('category_id', $id)->get();
+
         return $this;
     }
 

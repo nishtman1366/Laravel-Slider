@@ -5,7 +5,6 @@ namespace Nishtman\LaravelSlider\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Nishtman\LaravelSlider\Models\Category;
 use Nishtman\LaravelSlider\Models\Slider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
