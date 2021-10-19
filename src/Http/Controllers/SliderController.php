@@ -13,12 +13,14 @@ class SliderController extends Controller
 {
     public function index(Request $request)
     {
-        $sliders = Slider::with('category')->orderBy('id', 'DESC')
+        $categoryId = (int)$request->route('categoryId');
+        $sliders = Slider::with('category')
+            ->where('category_id', $categoryId)
+            ->orderBy('id', 'DESC')
             ->paginate();
 
         return response()->json([
             'sliders' => $sliders,
-            'categories' => Category::orderBy('name', 'ASC')->get(),
             'statuses' => [
                 'SLIDER_CREATED' => 'ایجاد شده',
                 'SLIDER_ACTIVE' => 'فعال',
@@ -32,7 +34,6 @@ class SliderController extends Controller
     {
         return response()
             ->json([
-                'categories' => Category::orderBy('name', 'ASC')->get(),
                 'statuses' => [
                     'SLIDER_CREATED' => 'ایجاد شده',
                     'SLIDER_ACTIVE' => 'فعال',
@@ -44,6 +45,8 @@ class SliderController extends Controller
 
     public function store(Request $request)
     {
+        $categoryId = (int)$request->route('categoryId');
+        $request->merge(['category_id' => $categoryId]);
         $request->validate([
             'category_id' => 'required|exists:sliders_categories,id',
             'title' => 'required',
@@ -73,7 +76,6 @@ class SliderController extends Controller
 
         return response()->json([
             'slider' => $slider,
-            'categories' => Category::orderBy('name', 'ASC')->get(),
             'statuses' => [
                 'SLIDER_CREATED' => 'ایجاد شده',
                 'SLIDER_ACTIVE' => 'فعال',
@@ -90,7 +92,8 @@ class SliderController extends Controller
         if (is_null($slider)) {
             throw new NotFoundHttpException('اسلایدر تصویر یافت نشد.');
         }
-
+        $categoryId = (int)$request->route('categoryId');
+        $request->merge(['category_id' => $categoryId]);
         $request->validate([
             'category_id' => 'required|exists:sliders_categories,id',
             'title' => 'required',
